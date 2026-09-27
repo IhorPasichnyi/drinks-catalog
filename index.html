@@ -21,18 +21,18 @@
 
     <main>
         <section id="filters">
-            <h2>Фільтр</h2>
+            <h2>🔍 Фільтр</h2>
             <form action="#" method="get">
-            <label for="type-select">Швидкий вибір типу:</label>
-            <select id="type-select" name="drink-type">
-                <option value="all">Усі</option>
-                <option value="coffee">Кава</option>
-                <option value="tea">Чай</option>
-                <option value="smoothies">Смузі та фреші</option>
-                <option value="cocktails">Коктейлі</option>
-                <option value="lemonades">Лимонади</option>
-            </select>
-            <button type="submit">Показати</button>
+                <label for="type-select">Тип напою:</label>
+                <select id="type-select" name="drink-type">
+                    <option value="all">Усі</option>
+                    <option value="coffee">Кава</option>
+                    <option value="tea">Чай</option>
+                    <option value="smoothies">Смузі та фреші</option>
+                    <option value="cocktails">Коктейлі</option>
+                    <option value="lemonades">Лимонади</option>
+                </select>
+                <button type="submit">Показати</button>
             </form>
         </section>
 
@@ -40,52 +40,73 @@
             <h2>Рецепти</h2>
 
             <section id="coffee">
-            <h3>Кава</h3>
-            <article>
-                <h4>Класичний капучино</h4>
-                <img src="assets/img/cappuccino.jpg" alt="Чашка капучино з пінкою" width="275" height="235">
-                <p>Ідеальний баланс еспресо та ніжнішої збитої молочної пінки.</p>
-            </article>
+                <h3>Кава</h3>
+                <article class="recipe-card">
+                    <div class="card-image-wrapper">
+                        <img src="assets/img/cappuccino.jpg" alt="Чашка капучино з пінкою">
+                    </div>
+                    <div class="card-content">
+                        <h4>Класичний капучино</h4>
+                        <p>Ідеальний баланс еспресо та ніжнішої збитої молочної пінки.</p>
+                    </div>
+                </article>
             </section>
 
             <section id="tea">
-            <h3>Чай</h3>
-            <article>
-                <h4>Матча лате</h4>
-                <img src="assets/img/matcha.jpg" alt="Зелена матча в прозорій склянці" width="175" height="375">
-                <p>Японський зелений чай із шовковистим молоком.</p>
-            </article>
+                <h3>Чай</h3>
+                <article class="recipe-card">
+                    <div class="card-image-wrapper">
+                        <img src="assets/img/matcha.jpg" alt="Зелена матча в прозорій склянці">
+                    </div>
+                    <div class="card-content">
+                        <h4>Матча лате</h4>
+                        <p>Японський зелений чай із шовковистим молоком.</p>
+                    </div>
+                </article>
             </section>
 
             <section id="smoothies">
                 <h3>Смузі та фреші</h3>
-                <article>
-                    <h4>Ягідний смузі</h4>
-                    <img src="assets/img/berry-smoothie.jpg" alt="Висока склянка з рожевим ягідним смузі" width="200" height="300">
-                    <p>Густий вітамінний напій на основі свіжих лісових ягід та банана.</p>
+                <article class="recipe-card">
+                    <div class="card-image-wrapper">
+                        <img src="assets/img/berry-smoothie.jpg" alt="Висока склянка з рожевим ягідним смузі">
+                    </div>
+                    <div class="card-content">
+                        <h4>Ягідний смузі</h4>
+                        <p>Густий вітамінний напій на основі свіжих лісових ягід та банана.</p>
+                    </div>
                 </article>
             </section>
 
             <section id="cocktails">
                 <h3>Коктейлі</h3>
-                <article>
-                    <h4>Безалкогольний Мохіто</h4>
-                    <img src="assets/img/mojito.jpg" alt="Келих освіжаючого мохіто з м'ятою та льодом" width="225" height="300">
-                    <p>Освіжаючий класичний коктейль з лаймом, м'ятою та содовою.</p>
+                <article class="recipe-card">
+                    <div class="card-image-wrapper">
+                        <img src="assets/img/mojito.jpg" alt="Келих освіжаючого мохіто з м'ятою та льодом">
+                    </div>
+                    <div class="card-content">
+                        <h4>Безалкогольний Мохіто</h4>
+                        <p>Освіжаючий класичний коктейль з лаймом, м'ятою та содовою.</p>
+                    </div>
                 </article>
             </section>
 
             <section id="lemonades">
-            <h3>Лимонади</h3>
-            <article>
-                <h4>М'ятно-лаймовий лимонад</h4>
-                <img src="assets/img/mint-lime-lemonade.jpg" alt="Склянка прохолодного лимонаду з льодом">
-                <p>Домашній освіжаючий лимонад із листям свіжої м'яти.</p>
-            </article>
+                <h3>Лимонади</h3>
+                <article class="recipe-card">
+                    <div class="card-image-wrapper">
+                        <img src="assets/img/mint-lime-lemonade.jpg" alt="Склянка прохолодного лимонаду з льодом">
+                    </div>
+                    <div class="card-content">
+                        <h4>М'ятно-лаймовий лимонад</h4>
+                        <p>Домашній освіжаючий лимонад із листям свіжої м'яти.</p>
+                    </div>
+                </article>
             </section>
         </section>
+    </main>
 
-        <aside id="recipe-details">
+    <aside id="recipe-details">
             <h2>Деталі обраного рецепта</h2>
             <p><strong>Напій:</strong> Класичний капучино</p>
             
@@ -106,7 +127,6 @@
                 </ol>
             </section>
         </aside>
-    </main>
 
     <footer>
         <p>Каталог рецептів напоїв &copy; 2026. Виконав: Ігор Пасічний.</p>
