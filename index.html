@@ -41,24 +41,21 @@
             <section id="recipes">
                 <h2>Рецепти</h2>
 
+                <!-- Підсумковий елемент (Крок 9) -->
+                <p id="drinks-count">Безалкогольних рецептів: 0</p>
+
                 <div class="recipes-grid">
                     <section id="coffee">
                         <h3>Кава</h3>
-
-                        <div class="category-grid">
-                            <article class="recipe-card">
+                        <div id="coffee-list" class="category-grid">
+                            <!-- Заглушка для Кроку 2 -->
+                            <article class="recipe-card static-demo">
                                 <div class="card-image-wrapper">
                                     <span class="badge badge--coffee">Кава</span>
-                                    <img src="assets/img/cappuccino.jpg" alt="Чашка капучино з пінкою">
+                                    <img src="assets/img/cappuccino.jpg" alt="Капучино">
                                 </div>
                                 <div class="card-content">
-                                    <h4>Класичний капучино</h4>
-                                    <div class="recipe-meta">
-                                        <span>⏱️ 3 хв</span>
-                                        <span>•</span>
-                                        <span>📊 Середній</span>
-                                    </div>
-                                    <p>Ідеальний баланс еспресо та ніжнішої збитої молочної пінки.</p>
+                                    <h4>Статична картка</h4>
                                 </div>
                             </article>
                         </div>
@@ -66,106 +63,22 @@
 
                     <section id="tea">
                         <h3>Чай</h3>
-
-                        <div class="category-grid">
-                            <article class="recipe-card">
-                                <div class="card-image-wrapper">
-                                    <span class="badge badge--tea">Чай</span>
-                                    <img src="assets/img/matcha.jpg" alt="Зелена матча в прозорій склянці">
-                                </div>
-                                <div class="card-content">
-                                    <h4>Матча лате</h4>
-                                    <div class="recipe-meta">
-                                        <span>⏱️ 5 хв</span>
-                                        <span>•</span>
-                                        <span>📊 Легкий</span>
-                                    </div>
-                                    <p>Японський зелений чай із шовковистим молоком.</p>
-                                </div>
-                            </article>
-                        </div>
+                        <div id="tea-list" class="category-grid"></div>
                     </section>
 
                     <section id="smoothies">
                         <h3>Смузі та фреші</h3>
-
-                        <div class="category-grid">
-                            <article class="recipe-card">
-                                <div class="card-image-wrapper">
-                                    <span class="badge badge--smoothies">Смузі та фреші</span>
-                                    <img src="assets/img/berry-smoothie.jpg" alt="Висока склянка з рожевим ягідним смузі">
-                                </div>
-                                <div class="card-content">
-                                    <h4>Ягідний смузі</h4>
-                                    <div class="recipe-meta">
-                                        <span>⏱️ 5 хв</span>
-                                        <span>•</span>
-                                        <span>📊 Легкий</span>
-                                    </div>
-                                    <p>Густий вітамінний напій на основі свіжих лісових ягід та банана.</p>
-                                </div>
-                            </article>
-                        </div>
+                        <div id="smoothies-list" class="category-grid"></div>
                     </section>
 
                     <section id="cocktails">
                         <h3>Коктейлі</h3>
-
-                        <div class="category-grid">
-                            <article class="recipe-card">
-                                <div class="card-image-wrapper">
-                                    <span class="badge badge--cocktails">Коктейлі</span>
-                                    <img src="assets/img/mojito.jpg" alt="Келих освіжаючого мохіто з м'ятою та льодом">
-                                </div>
-                                <div class="card-content">
-                                    <h4>Безалкогольний Мохіто</h4>
-                                    <div class="recipe-meta">
-                                        <span>⏱️ 7 хв</span>
-                                        <span>•</span>
-                                        <span>📊 Легкий</span>
-                                    </div>
-                                    <p>Освіжаючий класичний коктейль з лаймом, м'ятою та содовою.</p>
-                                </div>
-                            </article>
-
-                            <article class="recipe-card">
-                                <div class="card-image-wrapper">
-                                    <span class="badge badge--cocktails">Коктейлі</span>
-                                    <img src="assets/img/pina-colada.jpg" alt="Келих тропічної Піна Колади з шматочком ананаса, коктейльною вишнею та льодом">
-                                </div>
-                                <div class="card-content">
-                                    <h4>Піна колада</h4>
-                                    <div class="recipe-meta">
-                                        <span>⏱️ 10 хв</span>
-                                        <span>•</span>
-                                        <span>📊 Легкий</span>
-                                    </div>
-                                    <p>Тропічний солодкий коктейль з ананасовим соком, кокосовим молоком та ромом.</p>
-                                </div>
-                            </article>
-                        </div>
+                        <div id="cocktails-list" class="category-grid"></div>
                     </section>
 
                     <section id="lemonades">
                         <h3>Лимонади</h3>
-                        
-                        <div class="category-grid">
-                            <article class="recipe-card">
-                                <div class="card-image-wrapper">
-                                    <span class="badge badge--lemonades">Лимонади</span>
-                                    <img src="assets/img/mint-lime-lemonade.jpg" alt="Склянка прохолодного лимонаду з льодом">
-                                </div>
-                                <div class="card-content">
-                                    <h4>М'ятно-лаймовий лимонад</h4>
-                                    <div class="recipe-meta">
-                                        <span>⏱️ 15 хв</span>
-                                        <span>•</span>
-                                        <span>📊 Легкий</span>
-                                    </div>
-                                    <p>Домашній освіжаючий лимонад із листям свіжої м'яти.</p>
-                                </div>
-                            </article>
-                        </div>
+                        <div id="lemonades-list" class="category-grid"></div>
                     </section>
                 </div>
             </section>
@@ -195,7 +108,7 @@
     </div>
 
     <footer>
-        <p>Каталог рецептів напоїв &copy; 2026. Виконав: Ігор Пасічний.</p>
+        <p>Каталог рецептів напоїв (Варіант 15) &copy; 2026. Виконав: Ігор Пасічний.</p>
     </footer>
 </body>
 </html>
