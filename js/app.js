@@ -72,12 +72,6 @@ const recipes = [
     }
 ];
 
-// Крок 2: програмне видалення статичної заглушки з DOM
-const staticDemoCard = document.querySelector('.static-demo');
-if (staticDemoCard) {
-    staticDemoCard.remove();
-}
-
 // Крок 3: вибір контейнерів категорій у script.js за допомогою querySelector
 const categoryContainers = {
     coffee: document.querySelector('#coffee-list'),
@@ -89,6 +83,15 @@ const categoryContainers = {
 
 // Вибір підсумкового елемента
 const drinksCountElement = document.querySelector('#drinks-count');
+
+// Карта допоміжних назв категорій для відображення
+const categoryMeta = {
+    coffee: { typeText: 'Кава', badgeClass: 'badge--coffee' },
+    tea: { typeText: 'Чай', badgeClass: 'badge--tea' },
+    smoothies: { typeText: 'Смузі та фреші', badgeClass: 'badge--smoothies' },
+    cocktails: { typeText: 'Коктейлі', badgeClass: 'badge--cocktails' },
+    lemonades: { typeText: 'Лимонади', badgeClass: 'badge--lemonades' }
+};
 
 // Крок 4: функція рендеру списку даних у DOM
 function renderDrinks(recipeList) {
@@ -177,3 +180,75 @@ function renderDrinks(recipeList) {
 
 // Крок 8: виклик функції рендеру при завантаженні сторінки
 renderDrinks(recipes);
+
+
+// =========================
+// Практична робота №8
+// =========================
+
+// Крок 2: вибір форми у script.js
+const addRecipeForm = document.querySelector('#add-recipe-form');
+const timeInput = document.querySelector('#recipe-time');
+
+// Крок 8: додаткова валідація на подію input для поля timeMinutes
+timeInput.addEventListener('input', () => {
+    const value = Number(timeInput.value);
+    if (value <= 0) {
+        // Повідомлення про помилку
+        timeInput.setCustomValidity('Час приготування має бути більшим за 0!');
+    } else {
+        timeInput.setCustomValidity('');
+    }
+});
+
+// Додавання слухача події submit на форму
+addRecipeForm.addEventListener('submit', event => {
+    // Крок 3: скасування стандартного перезавантаження сторінки
+    event.preventDefault();
+
+    // Крок 4: зчитування значень полів форми
+    const name = document.querySelector('#recipe-name').value.trim();
+    const category = document.querySelector('#recipe-type').value;
+    const timeMinutes = Number(document.querySelector('#recipe-time').value);
+    const alcohol = document.querySelector('#recipe-alcohol').checked;
+
+    // Отримання метаінформації про категорію
+    const metaInfo = categoryMeta[category] || { typeText: 'Напій', badgeClass: 'badge--coffee' };
+
+    // Крок 5: збирання нового об'єкта та додавання його в масив
+    const newRecipe = {
+        name: name,
+        category: category,
+        typeText: metaInfo.typeText,
+        badgeClass: metaInfo.badgeClass,
+        alcohol: alcohol,
+        timeMinutes: timeMinutes,
+        difficulty: 'Легкий',
+        description: 'Свіжододаний домашній рецепт.',
+        imgSrc: 'assets/img/cappuccino.jpg'
+    };
+
+    recipes.push(newRecipe);
+
+    // Крок 6: повторне перемальовування списку з оновленим масивом
+    renderDrinks(recipes);
+
+    // Крок 7: очищення форми після успішного додавання
+    addRecipeForm.reset();
+});
+
+// Крок 9: друга подія варіанта — фільтрація
+
+// Вибір чекбокса «Лише безалкогольні»
+const nonAlcoholicFilter = document.querySelector('#non-alcoholic-filter');
+
+nonAlcoholicFilter.addEventListener('change', () => {
+    if (nonAlcoholicFilter.checked) {
+        // Фільтрація масиву, яка залишає лише безалкогольні рецепти
+        const filtered = recipes.filter(recipe => !recipe.alcohol);
+        renderDrinks(filtered);
+    } else {
+        // Показуємо повний список рецептів
+        renderDrinks(recipes);
+    }
+});

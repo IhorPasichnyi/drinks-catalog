@@ -1,0 +1,107 @@
+/* =====================================================
+   Стилі для форми додавання нового рецепта
+   ===================================================== */
+
+#add-recipe-section {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+}
+
+#add-recipe-section h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #2b2d42;
+    font-size: 1.35rem;
+}
+
+#add-recipe-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px 20px;
+    align-items: end;
+}
+
+/* Окремий блок для кожного поля */
+#add-recipe-form > div {
+    display: flex;
+    flex-direction: column;
+}
+
+#add-recipe-form label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #333333;
+    margin-bottom: 6px;
+}
+
+/* Текстові поля, select та number inputs */
+#add-recipe-form input[type="text"],
+#add-recipe-form input[type="number"],
+#add-recipe-form select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    background-color: #fff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Фокус на полях із збереженням акцентного кольору */
+#add-recipe-form input[type="text"]:focus,
+#add-recipe-form input[type="number"]:focus,
+#add-recipe-form select:focus {
+    outline: none;
+    border-color: #E85D04;
+    box-shadow: 0 0 0 3px rgba(232, 93, 4, 0.2);
+}
+
+/* Обгортка для чекбокса "Містить алкоголь" */
+#add-recipe-form div:has(#recipe-alcohol) {
+    flex-direction: row;
+    align-items: center;
+    height: 42px; /* вирівнювання за висотою з іншими полями */
+}
+
+#add-recipe-form label[for="recipe-alcohol"] {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+#add-recipe-form input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #E85D04;
+    cursor: pointer;
+}
+
+/* Кнопка відправки форми */
+#add-recipe-form button[type="submit"] {
+    background-color: #E85D04;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    grid-column: 1 / -1; /* розтягує кнопку на всю ширину у мобільній версії */
+    justify-self: start;
+}
+
+#add-recipe-form button[type="submit"]:hover {
+    background-color: #9D0208;
+}
+
+#add-recipe-form button[type="submit"]:active {
+    transform: scale(0.98);
+}
