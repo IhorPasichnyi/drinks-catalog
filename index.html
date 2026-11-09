@@ -6,6 +6,7 @@
     <title>Каталог рецептів напоїв</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/add-recipe-section.css">
+    <link rel="stylesheet" href="css/api-section.css">
     <script src="js/app.js" defer></script>
 </head>
 <body>
@@ -23,6 +24,21 @@
 
     <div class="layout-container">
         <main>
+            <!-- Секція інтеграції з API -->
+            <section id="api-section">
+                <h2>🌐 Пошук коктейлів через TheCocktailDB API</h2>
+                
+                <div class="api-controls">
+                    <input type="text" id="api-search-input" placeholder="Введіть назву (наприклад: margarita, mojito)" value="margarita">
+                    <button id="fetch-api-btn">🔍 Шукати в API</button>
+                    <button id="refresh-api-btn">🔄 Оновити</button>
+                </div>
+
+                <!-- Елементи завантаження та помилки -->
+                <div id="loading-indicator">⏳ Завантаження даних з сервера...</div>
+                <div id="error-message"></div>
+            </section>
+
             <section id="filters">
                 <h2>🔍 Фільтр</h2>
                 <form action="#" method="get">

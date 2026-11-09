@@ -2,8 +2,11 @@
 // Каталог рецептів напоїв — Варіант 15
 // ===================================================
 
+// Константа базового URL API TheCocktailDB
+const API_BASE_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+
 // Оголошення даних
-const recipes = [
+let recipes = [
     { 
         name: 'Класичний капучино', 
         category: 'coffee', 
@@ -81,8 +84,9 @@ const categoryContainers = {
     lemonades: document.querySelector('#lemonades-list')
 };
 
-// Вибір підсумкового елемента
 const drinksCountElement = document.querySelector('#drinks-count');
+const loadingIndicator = document.querySelector('#loading-indicator');
+const errorMessage = document.querySelector('#error-message');
 
 // Карта допоміжних назв категорій для відображення
 const categoryMeta = {
@@ -115,8 +119,8 @@ function renderDrinks(recipeList) {
 
         // Створення бейджа категорії
         const badge = document.createElement('span');
-        badge.classList.add('badge', recipe.badgeClass);
-        badge.textContent = recipe.typeText;
+        badge.classList.add('badge', recipe.badgeClass || 'badge--cocktails');
+        badge.textContent = recipe.typeText || 'Коктейлі';;
 
         const img = document.createElement('img');
         img.src = recipe.imgSrc;
@@ -139,13 +143,13 @@ function renderDrinks(recipeList) {
         meta.classList.add('recipe-meta');
 
         const timeSpan = document.createElement('span');
-        timeSpan.textContent = `⏱️ ${recipe.timeMinutes} хв`;
+        timeSpan.textContent = `⏱️ ${recipe.timeMinutes || 5} хв`;
 
         const dotSpan = document.createElement('span');
         dotSpan.textContent = '•';
 
         const diffSpan = document.createElement('span');
-        diffSpan.textContent = `📊 ${recipe.difficulty}`;
+        diffSpan.textContent = `📊 ${recipe.difficulty || 'Легкий'}`;
 
         meta.append(timeSpan, dotSpan, diffSpan);
 
@@ -165,7 +169,7 @@ function renderDrinks(recipeList) {
             nonAlcoholicCount++;
         }
 
-        // КРОК 7: додавання створеного елемента у відповідний контейнер категорії
+        // Крок 7: додавання створеного елемента у відповідний контейнер категорії
         const targetContainer = categoryContainers[recipe.category];
         if (targetContainer) {
             targetContainer.append(card);
@@ -182,73 +186,155 @@ function renderDrinks(recipeList) {
 renderDrinks(recipes);
 
 
-// =========================
-// Практична робота №8
-// =========================
+// ==================================
+// Практична робота №9
+// ==================================
 
-// Крок 2: вибір форми у script.js
+
+ // Крок 2: async-функція запиту до зовнішнього API TheCocktailDB (https://www.thecocktaildb.com/api/json/v1/1/search.php?s=)
+async function loadCocktailsFromAPI(query = 'margarita') {
+    // Крок 7: показуємо стан завантаження та ховаємо старі помилки
+    if (loadingIndicator)
+        loadingIndicator.style.display = 'block';
+
+    if (errorMessage)
+        errorMessage.style.display = 'none';
+
+    try {
+        // Крок 3: виконання fetch запит
+        const response = await fetch(`${API_BASE_URL}${encodeURIComponent(query)}`);
+
+        // Крок 4: перевірка HTTP-статусу (200-299)
+        if (!response.ok) {
+            throw new Error(`Сервер відповів помилкою із кодом: ${response.status}`);
+        }
+
+        // Крок 5: розбір JSON
+        const data = await response.json();
+        console.log('Отримані дані з TheCocktailDB API:', data);
+
+        // drinks null, коли нічого не знайдено
+        if (!data.drinks) {
+            throw new Error('Рецептів за такою назвою не знайдено');
+        }
+
+        // Перетворення даних з API у структуру застосунку
+        const apiRecipes = data.drinks.map(item => {
+            const isNonAlcoholic = item.strAlcoholic === 'Non alcoholic';
+            return {
+                name: item.strDrink,
+                category: 'cocktails', // Додавання у секцію коктейлів
+                typeText: item.strAlcoholic || 'Коктейль',
+                badgeClass: isNonAlcoholic ? 'badge--smoothies' : 'badge--cocktails',
+                alcohol: !isNonAlcoholic,
+                timeMinutes: Math.floor(Math.random() * 8) + 3, // Випадковий час для метаданих
+                difficulty: 'Середній',
+                description: item.strInstructions ? item.strInstructions.slice(0, 100) + '...' : 'Смачний рецепт напою.',
+                imgSrc: item.strDrinkThumb
+            };
+        });
+
+        // Оновлюємо головний масив recipes, щоб фільтрація з ЛР8 працювала коректно
+        recipes = apiRecipes;
+
+        // Крок 6: виведення нових даних у DOM через функцію рендеру
+        renderDrinks(apiRecipes);
+
+    } catch (error) {
+        // Крок 8: повідомлення про помилку користувачу
+        console.error('Помилка при завантаженні API:', error);
+        
+        if (errorMessage) {
+            errorMessage.style.display = 'block';
+            // Перевірка мережевої помилки
+            if (error.name === 'TypeError' || error.message.includes('Failed to fetch')) {
+                errorMessage.textContent = '⚠️ Не вдалося з\'єднатися з сервером. Перевірте підключення до Інтернету.';
+            } else {
+                errorMessage.textContent = `⚠️ ${error.message}`;
+            }
+        }
+    } finally {
+        // Крок 7: вимикання видимості стану завантаження незалежно від результату
+        if (loadingIndicator)
+            loadingIndicator.style.display = 'none';
+    }
+}
+
+// Крок 10: прив'язка викликів до кнопок пошуку та "Оновити"
+const fetchApiBtn = document.querySelector('#fetch-api-btn');
+const refreshApiBtn = document.querySelector('#refresh-api-btn');
+const apiSearchInput = document.querySelector('#api-search-input');
+
+if (fetchApiBtn) {
+    fetchApiBtn.addEventListener('click', () => {
+        const query = apiSearchInput ? apiSearchInput.value.trim() : 'margarita';
+        if (query)
+            loadCocktailsFromAPI(query);
+    });
+}
+
+if (refreshApiBtn) {
+    refreshApiBtn.addEventListener('click', () => {
+        const query = apiSearchInput ? apiSearchInput.value.trim() : 'margarita';
+        loadCocktailsFromAPI(query);
+    });
+}
+
+
+// ==================================
+// Практична робота №8
+// ==================================
+
 const addRecipeForm = document.querySelector('#add-recipe-form');
 const timeInput = document.querySelector('#recipe-time');
 
-// Крок 8: додаткова валідація на подію input для поля timeMinutes
-timeInput.addEventListener('input', () => {
-    const value = Number(timeInput.value);
-    if (value <= 0) {
-        // Повідомлення про помилку
-        timeInput.setCustomValidity('Час приготування має бути більшим за 0!');
-    } else {
-        timeInput.setCustomValidity('');
-    }
-});
+if (timeInput) {
+    timeInput.addEventListener('input', () => {
+        if (Number(timeInput.value) <= 0) {
+            timeInput.setCustomValidity('Час приготування має бути більшим за 0 хв!');
+        } else {
+            timeInput.setCustomValidity('');
+        }
+    });
+}
 
-// Додавання слухача події submit на форму
-addRecipeForm.addEventListener('submit', event => {
-    // Крок 3: скасування стандартного перезавантаження сторінки
-    event.preventDefault();
+if (addRecipeForm) {
+    addRecipeForm.addEventListener('submit', event => {
+        event.preventDefault();
 
-    // Крок 4: зчитування значень полів форми
-    const name = document.querySelector('#recipe-name').value.trim();
-    const category = document.querySelector('#recipe-type').value;
-    const timeMinutes = Number(document.querySelector('#recipe-time').value);
-    const alcohol = document.querySelector('#recipe-alcohol').checked;
+        const name = document.querySelector('#recipe-name').value.trim();
+        const category = document.querySelector('#recipe-type').value;
+        const timeMinutes = Number(timeInput.value);
+        const alcohol = document.querySelector('#recipe-alcohol').checked;
 
-    // Отримання метаінформації про категорію
-    const metaInfo = categoryMeta[category] || { typeText: 'Напій', badgeClass: 'badge--coffee' };
+        const metaInfo = categoryMeta[category] || { typeText: 'Напій', badgeClass: 'badge--coffee' };
 
-    // Крок 5: збирання нового об'єкта та додавання його в масив
-    const newRecipe = {
-        name: name,
-        category: category,
-        typeText: metaInfo.typeText,
-        badgeClass: metaInfo.badgeClass,
-        alcohol: alcohol,
-        timeMinutes: timeMinutes,
-        difficulty: 'Легкий',
-        description: 'Свіжододаний домашній рецепт.',
-        imgSrc: 'assets/img/cappuccino.jpg'
-    };
+        const newRecipe = {
+            name: name,
+            category: category,
+            typeText: metaInfo.typeText,
+            badgeClass: metaInfo.badgeClass,
+            alcohol: alcohol,
+            timeMinutes: timeMinutes,
+            difficulty: 'Легкий',
+            description: 'Свіжододаний домашній авторський рецепт.',
+            imgSrc: 'assets/img/cappuccino.jpg'
+        };
 
-    recipes.push(newRecipe);
-
-    // Крок 6: повторне перемальовування списку з оновленим масивом
-    renderDrinks(recipes);
-
-    // Крок 7: очищення форми після успішного додавання
-    addRecipeForm.reset();
-});
-
-// Крок 9: друга подія варіанта — фільтрація
-
-// Вибір чекбокса «Лише безалкогольні»
-const nonAlcoholicFilter = document.querySelector('#non-alcoholic-filter');
-
-nonAlcoholicFilter.addEventListener('change', () => {
-    if (nonAlcoholicFilter.checked) {
-        // Фільтрація масиву, яка залишає лише безалкогольні рецепти
-        const filtered = recipes.filter(recipe => !recipe.alcohol);
-        renderDrinks(filtered);
-    } else {
-        // Показуємо повний список рецептів
+        recipes.push(newRecipe);
         renderDrinks(recipes);
-    }
-});
+        addRecipeForm.reset();
+    });
+}
+
+const nonAlcoholicFilter = document.querySelector('#non-alcoholic-filter');
+if (nonAlcoholicFilter) {
+    nonAlcoholicFilter.addEventListener('change', () => {
+        if (nonAlcoholicFilter.checked) {
+            const nonAlcoholicOnly = recipes.filter(recipe => !recipe.alcohol);
+            renderDrinks(nonAlcoholicOnly);
+        } else {
+            renderDrinks(recipes);
+        }
+    });
+}

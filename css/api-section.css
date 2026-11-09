@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Стилі для секції інтеграції з API
+   ========================================================================== */
+
+#api-section {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.api-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+#api-search-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+#api-search-input:focus {
+    outline: none;
+    border-color: #E85D04;
+    box-shadow: 0 0 0 3px rgba(232, 93, 4, 0.2);
+}
+
+#fetch-api-btn {
+    background-color: #E85D04;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+#fetch-api-btn:hover {
+    background-color: #9D0208;
+}
+
+#refresh-api-btn {
+    background-color: #2b2d42;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#refresh-api-btn:hover {
+    background-color: #1a1b29;
+}
+
+#loading-indicator {
+    display: none;
+    color: #E85D04;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+#error-message {
+    display: none;
+    background-color: #ffe3e3;
+    color: #9D0208;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #9D0208;
+    margin: 10px 0;
+}
